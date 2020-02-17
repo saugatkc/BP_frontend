@@ -1,0 +1,21 @@
+#product{
+    margin: 5px;
+}
+.card-product .image_wrap{
+    border-radius: 3px 3px 0 0;
+    overflow: hidden;
+    position: relative;
+    height: 220px;
+    margin: 10px;
+    text-align: center;
+}
+.card-product .image_wrap img {
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: cover;
+}
+.card-product .info-wrap {
+    overflow: hidden;
+    padding: 8px;
+    text-align: center;
+}

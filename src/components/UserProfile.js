@@ -37,7 +37,7 @@ export default class UserProfile extends Component {
         e.preventDefault();
         const data = new FormData()
         data.append('myFile', this.state.selectedFile)
-        Axios.post('http://localhost:3001/uploads/hotel', data, this.state.config)
+        Axios.post('http://localhost:3001/upload/hotel', data, this.state.config)
             .then((response) => {
                 this.setState({
                     hotel: { ...this.state.hotel, profileimage: response.data.filename }
@@ -69,7 +69,8 @@ export default class UserProfile extends Component {
                         <Form>
                         <FormGroup>
                                 <img className='img-thumbnail'
-                                    width='400' src={`http://localhost:3001/uploads/hotel${this.state.hotel.profileimage}`}
+                                    width='400' src={`http://localhost:3001/hotels/${this.state.hotel.profileimage}`}
+                             
                                     alt="profile" />
                                 <CustomInput type='file' id='profilePic'
                                     onChange={this.handleFileSelect} />
@@ -124,6 +125,13 @@ export default class UserProfile extends Component {
                                 <Input type='text' id='noOfRooms'
                                     name='noOfRooms'
                                     value={this.state.hotel.noOfRooms}
+                                    onChange={(e) => this.handleChange(e)} />
+                            </FormGroup>
+                            <FormGroup>
+                                <Label for='available'>Available Rooms</Label>
+                                <Input type='text' id='available'
+                                    name='available'
+                                    value={this.state.hotel.available}
                                     onChange={(e) => this.handleChange(e)} />
                             </FormGroup>
                             <FormGroup>

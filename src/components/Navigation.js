@@ -38,7 +38,7 @@ class Navigation extends Component {
                             <NavLink href='/gallery'>Gallery</NavLink>
                         </NavItem>
                         <NavItem>
-                            <NavLink href='/features'>MyFeatures</NavLink>
+                            <NavLink href='/feature'>MyFeatures</NavLink>
                         </NavItem>
                         <NavItem>
                             <NavLink href='/profile'>Profile</NavLink>
