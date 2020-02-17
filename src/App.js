@@ -3,7 +3,7 @@ import { Container } from 'reactstrap';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Login from './components/Login';
 import Register from './components/Register';
-import History from './components/bookings/Completed';
+import History from './components/History';
 import PrivateRoute from './utils/PrivateRoute';
 import Dashboard from './components/Dashboard';
 import NoMatch from './components/NoMatch';
