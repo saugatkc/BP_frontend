@@ -1,21 +1,20 @@
 import React, { Component } from 'react'
-import { CardGroup,Card, Col, Row,CardBody, CardTitle, CardSubtitle,CardText,Button,CardImg, Container } from 'reactstrap'
 import Navigation from './Navigation';
 import { Table } from 'reactstrap'
+import { Container } from 'reactstrap'
 import Axios from 'axios';
 
-export default class  extends Component {
+export default class History extends Component {
 
   constructor(props) {
     super(props)
   
     this.state = {
-      checkin: '',
-      image: '',
+
       config: {
         headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
     },
-       popular: [],
+       completeds: [],
     }
   }
 
@@ -23,7 +22,7 @@ export default class  extends Component {
     Axios.get('http://localhost:3001/bookings/hotel/hotelbooking/completed',this.state.config)
     .then((response)=>{
       const data = response.data;
-      this.setState({popular:  data});
+      this.setState({completeds:  data});
       console.log("data fecth");
      
     }).catch(error => console.log(error.response));
@@ -49,17 +48,17 @@ export default class  extends Component {
                     </thead>
                     <tbody>
                     {
-                            this.state.popular.map((pop =>
+                            this.state.completeds.map((completed =>
                         <tr>
 
                             <td>
                             <div className="image_wrap">
-                              <img src={`http://localhost:3001/uploads/${pop.guest.image}`}/>
+                              <img src={`http://localhost:3001/uploads/${completed.guest.image}`}/>
                             </div>
                             </td>
-                            <td>{pop.guest.fullname}</td>
-                            <td>{pop.checkin}</td>
-                            <td>{pop.checkout}</td>
+                            <td>{completed.guest.fullname}</td>
+                            <td>{completed.checkin}</td>
+                            <td>{completed.checkout}</td>
                         </tr>
                         ))
                         }

@@ -1,14 +1,13 @@
 import React, { Component } from 'react'
 import Navigation from './Navigation';
 
-
-export default class Dashboard extends Component {
+export default class Booking extends Component {
     render() {
-        return (
+        return(
             <React.Fragment>
             <div>
             <Navigation/>
-                <h1>checkedin</h1>
+                <h1>bookings</h1>
             </div>
             </React.Fragment>
 
