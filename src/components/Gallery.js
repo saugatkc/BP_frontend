@@ -17,7 +17,7 @@ export default class Gallery extends Component {
       }
     
       componentDidMount() {
-        Axios.get('http://localhost:3001/hotels/gallery/hotel',this.state.config)
+        Axios.get('http://localhost:3001/hotels/gallery/get/images',this.state.config)
         .then((response)=>{
           const data = response.data;
           this.setState({gallery:  data});
@@ -25,9 +25,18 @@ export default class Gallery extends Component {
          
         }).catch(error => console.log(error.response));
       }
+
+      handleImageDelete = (imageId) => {
+        const filteredImage = this.state.gallery.filter((image) => {
+            return image._id !== imageId
+        })
+        this.setState({
+          gallery: filteredImage
+        })
+        Axios.delete(`http://localhost:3001/hotels/gallery/${imageId}`, this.state.config)
+    }
     
     render() {
-        const{ gallery } = this.props
         return (
             <React.Fragment>
             <div>
@@ -46,7 +55,7 @@ export default class Gallery extends Component {
                   </div>
                   <figcaption class="info-wrap">
               <h4 class="title">{pop.image}</h4>
-              <Button size='sm' color='danger'>Delete</Button>
+              <Button size='sm' color='danger' onClick={() => this.handleImageDelete(pop._id)}>Delete</Button>
                   </figcaption>
                 </figure>
               </div>
