@@ -15,6 +15,7 @@ export default class UserProfile extends Component {
                 headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
             },
             selectedFile: null,
+            profileimage:'',
         }
     }
 
@@ -37,7 +38,7 @@ export default class UserProfile extends Component {
         e.preventDefault();
         const data = new FormData()
         data.append('myFile', this.state.selectedFile)
-        Axios.post('http://localhost:3001/upload/hotel', data, this.state.config)
+        Axios.post('http://localhost:3001/upload/', data, this.state.config)
             .then((response) => {
                 this.setState({
                     hotel: { ...this.state.hotel, profileimage: response.data.filename }
@@ -72,10 +73,9 @@ export default class UserProfile extends Component {
                                     width='400' src={`http://localhost:3001/hotels/${this.state.hotel.profileimage}`}
                              
                                     alt="profile" />
-                                <CustomInput type='file' id='profilePic'
-                                    onChange={this.handleFileSelect} />
-                                {this.state.selectedFile ? (<FileUploadButton
-                                    uploadFile={this.uploadFile} />) : null}
+                             <Input type='file' name='image' id='image'
+                             onChange={this.handleFileSelect}/> <br/>
+                            <Button color='success' onClick={this.uploadFile}>Upload Picture</Button> 
                             </FormGroup>
                             <FormGroup>
                                 <Label for='owner'>Owner</Label>
@@ -117,7 +117,7 @@ export default class UserProfile extends Component {
                                 <Label for='addressCity'>City</Label>
                                 <Input type='text' id='addressCity'
                                     name='addressCity'
-                                    value={this.state.hotel.addressDistrict}
+                                    value={this.state.hotel.addressCity}
                                     onChange={(e) => this.handleChange(e)} />
                             </FormGroup>
                             <FormGroup>

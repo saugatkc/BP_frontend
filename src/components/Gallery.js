@@ -27,6 +27,7 @@ export default class Gallery extends Component {
       }
     
     render() {
+        const{ gallery } = this.props
         return (
             <React.Fragment>
             <div>

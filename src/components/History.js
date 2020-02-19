@@ -11,6 +11,7 @@ export default class History extends Component {
   
     this.state = {
 
+      status: 'completed',
       config: {
         headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
     },
@@ -26,6 +27,12 @@ export default class History extends Component {
       console.log("data fecth");
      
     }).catch(error => console.log(error.response));
+    const filteredBooking = this.state.completeds.filter((completed) => {
+      return completed.status = this.state.status
+  })
+  this.setState({
+    completeds: filteredBooking
+  })
   }
 
  
@@ -33,7 +40,6 @@ export default class History extends Component {
  
   
     render() {
-      console.log(this.state.popular)
         return (
             <React.Fragment>
                 <Navigation />
@@ -53,7 +59,7 @@ export default class History extends Component {
 
                             <td>
                             <div className="image_wrap">
-                              <img src={`http://localhost:3001/uploads/${completed.guest.image}`}/>
+                              <img src={`http://localhost:3001/uploads/${completed.guest.image}`}  width='200px' height='200px'/>
                             </div>
                             </td>
                             <td>{completed.guest.fullname}</td>

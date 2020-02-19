@@ -10,30 +10,51 @@ export default class Booking extends Component {
     super(props)
   
     this.state = {
+      status:"booked",
 
       config: {
         headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
     },
-       completeds: [],
+       bookings: [],
     }
   }
 
   componentDidMount() {
-    Axios.get('http://localhost:3001/bookings/hotel/hotelbooking/completed',this.state.config)
+    Axios.get('http://localhost:3001/bookings/hotel/hotelbooking/booked',this.state.config)
     .then((response)=>{
       const data = response.data;
-      this.setState({completeds:  data});
+      this.setState({bookings:  data});
       console.log("data fecth");
-     
     }).catch(error => console.log(error.response));
   }
+
+  handleBookingUpdate = (bookingId) => {
+    const filteredBooking = this.state.bookings.filter((completed) => {
+        return completed._id !== bookingId
+    })
+    this.setState({
+      bookings: filteredBooking
+    })
+    Axios.put(`http://localhost:3001/bookings/${bookingId}`,{status:"checkedin"})
+}
+
+
+
+  handleBookingDelete = (bookingId) => {
+    const filteredBooking = this.state.bookings.filter((completed) => {
+        return completed._id !== bookingId
+    })
+    this.setState({
+      bookings: filteredBooking
+    })
+    Axios.delete(`http://localhost:3001/bookings/${bookingId}`, this.state.config)
+}
 
  
 
  
   
     render() {
-      console.log(this.state.popular)
         return (
             <React.Fragment>
                 <Navigation />
@@ -50,19 +71,19 @@ export default class Booking extends Component {
                     </thead>
                     <tbody>
                     {
-                            this.state.completeds.map((completed =>
-                        <tr>
+                            this.state.bookings.map((booking =>
+                        <tr key={booking._id}>
 
                             <td>
                             <div className="image_wrap">
-                              <img src={`http://localhost:3001/uploads/${completed.guest.image}`}/>
+                              <img src={`http://localhost:3001/uploads/${booking.guest.image}`}  width='200px' height='200px'/>
                             </div>
                             </td>
-                            <td>{completed.guest.fullname}</td>
-                            <td>{completed.checkin}</td>
-                            <td>{completed.checkout}</td>
-                           <td><Button size='sm' color='warning' >CheckIn</Button></td> 
-                           <td> <Button size='sm' color='danger'>Delete</Button></td>
+                            <td>{booking.guest.fullname}</td>
+                            <td>{booking.checkin}</td>
+                            <td>{booking.checkout}</td>
+                           <td><Button size='sm' color='warning' onClick={() => this.handleBookingUpdate(booking._id)} >CheckIn</Button></td> 
+                           <td> <Button size='sm' color='danger'  onClick={() => this.handleBookingDelete(booking._id)}>Delete</Button></td>
                         </tr>
                         ))
                         }

@@ -14,26 +14,35 @@ export default class Dashboard extends Component {
       config: {
         headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
     },
-       completeds: [],
+       stayings: [],
     }
   }
 
   componentDidMount() {
-    Axios.get('http://localhost:3001/bookings/hotel/hotelbooking/completed',this.state.config)
+    Axios.get('http://localhost:3001/bookings/hotel/hotelbooking/staying',this.state.config)
     .then((response)=>{
       const data = response.data;
-      this.setState({completeds:  data});
+      this.setState({stayings:  data});
       console.log("data fecth");
      
     }).catch(error => console.log(error.response));
   }
+
+  handleBookingUpdate = (bookingId) => {
+    const filteredBooking = this.state.stayings.filter((stay) => {
+        return stay._id !== bookingId
+    })
+    this.setState({
+      stayings: filteredBooking
+    })
+    Axios.put(`http://localhost:3001/bookings/${bookingId}`,{status:"completed"})
+}
 
  
 
  
   
     render() {
-      console.log(this.state.popular)
         return (
             <React.Fragment>
                 <Navigation />
@@ -49,18 +58,18 @@ export default class Dashboard extends Component {
                     </thead>
                     <tbody>
                     {
-                            this.state.completeds.map((completed =>
+                            this.state.stayings.map((stay =>
                         <tr>
 
                             <td>
                             <div className="image_wrap">
-                              <img src={`http://localhost:3001/uploads/${completed.guest.image}`}/>
+                              <img src={`http://localhost:3001/uploads/${stay.guest.image}`} width='200px' height='200px'/>
                             </div>
                             </td>
-                            <td>{completed.guest.fullname}</td>
-                            <td>{completed.checkin}</td>
-                            <td>{completed.checkout}</td>
-                           <td><Button size='sm' color='warning' >CheckOut</Button></td> 
+                            <td>{stay.guest.fullname}</td>
+                            <td>{stay.checkin}</td>
+                            <td>{stay.checkout}</td>
+                           <td><Button size='sm' color='warning'onClick={() => this.handleBookingUpdate(stay._id)} >CheckOut</Button></td> 
                         </tr>
                         ))
                         }
