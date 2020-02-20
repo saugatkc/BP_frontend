@@ -99,8 +99,7 @@ export default class Gallery extends Component {
                     <img src={`http://localhost:3001/gallery/${pop.image}`} width='300px' height='300px'/>
                   </div>
                   <figcaption class="info-wrap">
-              <h4 class="title">{pop.image}</h4>
-              <Button size='sm' color='danger' onClick={() => this.handleImageDelete(pop._id)}>Delete</Button>
+              <Button size='sm' color='danger' onClick={() => this.handleImageDelete(pop._id)} width='300px'>Delete</Button>
                   </figcaption>
                 </figure>
               </div>
