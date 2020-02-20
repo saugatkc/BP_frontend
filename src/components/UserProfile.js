@@ -37,8 +37,8 @@ export default class UserProfile extends Component {
     uploadFile = (e) => {
         e.preventDefault();
         const data = new FormData()
-        data.append('myFile', this.state.selectedFile)
-        Axios.post('http://localhost:3001/upload/', data, this.state.config)
+        data.append('imageFile', this.state.selectedFile)
+        Axios.post('http://localhost:3001/upload/hotel', data, this.state.config)
             .then((response) => {
                 this.setState({
                     hotel: { ...this.state.hotel, profileimage: response.data.filename }
@@ -69,13 +69,13 @@ export default class UserProfile extends Component {
                     <Container className='mt-4'>
                         <Form>
                         <FormGroup>
-                                <img className='img-thumbnail'
+                        <img className='img-thumbnail'
                                     width='400' src={`http://localhost:3001/hotels/${this.state.hotel.profileimage}`}
-                             
                                     alt="profile" />
-                             <Input type='file' name='image' id='image'
-                             onChange={this.handleFileSelect}/> <br/>
-                            <Button color='success' onClick={this.uploadFile}>Upload Picture</Button> 
+                                <CustomInput type='file' id='profilePic'
+                                    onChange={this.handleFileSelect} />
+                                {this.state.selectedFile ? (<FileUploadButton
+                                    uploadFile={this.uploadFile} />) : null}
                             </FormGroup>
                             <FormGroup>
                                 <Label for='owner'>Owner</Label>
